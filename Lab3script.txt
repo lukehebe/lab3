@@ -1,0 +1,28 @@
+$MachineIP = 192.168.33.53
+$Username = $env:Administrator
+$Hostname = $env:reedws-win
+$PowerShellVersion = $PowerShellVersion5
+$Date ="9/26/2023
+
+
+$Body = "This machine's IP is $IP. User is $User. Hostname is $HOST. PowerShell $ver. Today's Date is $DATE"
+
+$Body | Out-File -FilePath "Sysinformation.txt"
+
+$SMTPServer = "smtp.gmail.com"
+$From = "lukehebenstr@gmail.com"
+$To = "hebensle@mail.uc.edu"
+$Subject = "Information about the system"
+$SMTPPassword = "Bearcat2023"
+
+$EmailBody = @{
+    From = $From
+    To = $To
+    Subject = $Subject
+    Body = $Body
+    SmtpServer = $SMTPServer
+    Credential = (New-Object -TypeName PSCredential -ArgumentList $From, (ConvertTo-SecureString -String $SMTPPassword -AsPlainText -Force))
+}
+
+Send-MailMessage @EmailBody
+
